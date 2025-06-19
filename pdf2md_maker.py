@@ -5,6 +5,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from marker.converters.pdf import PdfConverter
 from marker.models import create_model_dict
+import time
 
 # --- .env 読み込み ---
 load_dotenv()
@@ -43,6 +44,7 @@ tags:
 
 # --- コンバータを準備 ---
 print("🟡 モデルとOCR設定の準備中...")
+start_time = time.time()
 converter = PdfConverter(
     artifact_dict=create_model_dict(),
     output_dir=output_dir,
@@ -67,3 +69,5 @@ with open(output_file, "w", encoding="utf-8") as f:
     f.write(front_matter + result)
 
 print(f"✅ Done: {output_file}")
+end_time = time.time()
+print(f"🟢 処理時間: {end_time - start_time:.2f}秒")
