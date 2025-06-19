@@ -47,7 +47,6 @@ print("🟡 モデルとOCR設定の準備中...")
 start_time = time.time()
 converter = PdfConverter(
     artifact_dict=create_model_dict(),
-    output_dir=output_dir,
     force_ocr=force_ocr,
     format_lines=format_lines,
     use_llm=use_llm,
