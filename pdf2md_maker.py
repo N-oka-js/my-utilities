@@ -9,21 +9,6 @@ from marker.models import create_model_dict
 load_dotenv()
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-# --- Obsidianのフロントマターの作成 ---
-pdf_name = os.path.basename(pdf_path)                       # ファイル名（例: Webを支える技術.pdf）
-title = os.path.splitext(pdf_name)[0]                       # 拡張子なしのファイル名
-created = datetime.now().strftime("%Y-%m-%d")               # 日付（例: 2025-06-18）
-
-front_matter = f"""---
-title: "{title}"
-author: ""
-created: {created}
-tags:
-  - "pdf"
----
-
-"""
-
 # --- 設定 ---
 pdf_path = input(
     "変換したいPDFファイルの絶対パスを入力してください：\n"
@@ -39,6 +24,21 @@ strip_existing_ocr = True       # 既存の誤OCRを捨てて再処理する
 redo_inline_math = True         # 数式再解釈（Markdown整形）     
 disable_image_extraction = False # 図のaltテキスト化をする場合はTrue  
 page_range = None               # "0,2-5" のように一部ページだけ処理したいとき  
+
+# --- Obsidianのフロントマターの作成 ---
+pdf_name = os.path.basename(pdf_path)                       # ファイル名（例: Webを支える技術.pdf）
+title = os.path.splitext(pdf_name)[0]                       # 拡張子なしのファイル名
+created = datetime.now().strftime("%Y-%m-%d")               # 日付（例: 2025-06-18）
+
+front_matter = f"""---
+title: "{title}"
+author: ""
+created: {created}
+tags:
+  - "pdf"
+---
+
+"""
 
 # --- コンバータを準備 ---
 converter = PdfConverter(
