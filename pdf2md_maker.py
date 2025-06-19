@@ -14,7 +14,7 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 pdf_path = input(
     "変換したいPDFファイルの絶対パスを入力してください：\n"
     "例：C:\\Users\\yu_yu\\OneDrive\\PDF\\自動同期\\雑誌\\Webを支える技術.pdf\n> "
-).strip()
+).strip().strip('"')
 output_dir = r"C:\dev\obsidian\Zettelkasten\LiteratureNote"
 output_format = "markdown"      # 他に json, html など
 languages = "ja,en"             # 日本語 + 英語対応
@@ -44,7 +44,6 @@ tags:
 # --- コンバータを準備 ---
 converter = PdfConverter(
     artifact_dict=create_model_dict(),
-    output_format=output_format,
     output_dir=output_dir,
     force_ocr=force_ocr,
     format_lines=format_lines,
@@ -57,7 +56,7 @@ converter = PdfConverter(
 )
 
 # --- 実行 ---
-result = converter(pdf_path)
+result = converter(pdf_path, output_format=output_format)
 
 # --- 出力保存（Markdownの例） ---
 output_file = os.path.join(output_dir, "converted.md")
