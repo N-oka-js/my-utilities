@@ -42,6 +42,7 @@ tags:
 """
 
 # --- コンバータを準備 ---
+print("🟡 モデルとOCR設定の準備中...")
 converter = PdfConverter(
     artifact_dict=create_model_dict(),
     output_dir=output_dir,
@@ -56,9 +57,11 @@ converter = PdfConverter(
 )
 
 # --- 実行 ---
+print("🟡 変換中...")
 result = converter(pdf_path, output_format=output_format)
 
 # --- 出力保存（Markdownの例） ---
+print("🟡 出力保存中...")
 output_file = os.path.join(output_dir, "converted.md")
 with open(output_file, "w", encoding="utf-8") as f:
     f.write(front_matter + result)
