@@ -46,20 +46,23 @@ tags:
 print("🟡 モデルとOCR設定の準備中...")
 start_time = time.time()
 converter = PdfConverter(
-    artifact_dict=create_model_dict(),
-    force_ocr=force_ocr,
-    format_lines=format_lines,
-    use_llm=use_llm,
-    languages=languages,
-    strip_existing_ocr=strip_existing_ocr,    
-    redo_inline_math=redo_inline_math,        
-    disable_image_extraction=disable_image_extraction,  
-    page_range=page_range                     
+    artifact_dict=create_model_dict()             
 )
 
 # --- 実行 ---
 print("🟡 変換中...")
-result = converter(pdf_path, output_format=output_format)
+result = converter(    
+    pdf_path,
+    output_format="markdown",
+    force_ocr=True,
+    format_lines=True,
+    use_llm=True,
+    languages="ja,en",
+    strip_existing_ocr=True,
+    redo_inline_math=True,
+    disable_image_extraction=False,
+    page_range=None,
+    gemini_api_key=gemini_api_key )
 
 # --- 出力保存（Markdownの例） ---
 print("🟡 出力保存中...")
