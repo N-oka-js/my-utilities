@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from marker.converters.pdf import PdfConverter
 from marker.models import create_model_dict
 import time
+import subprocess, shlex, textwrap
 
 # --- .env 読み込み ---
 load_dotenv()
@@ -42,27 +43,33 @@ tags:
 
 """
 
+# --- CLI コマンド組み立て ---
+cmd = textwrap.dedent(f"""
+  marker_single "{pdf_path}"
+    --output_format {output_format}
+    --force_ocr
+    --format_lines
+    --use_llm
+    --strip_existing_ocr
+    --redo_inline_math
+    --gemini_api_key {gemini_api_key}
+    --output_dir "{output_dir}"
+""").strip().replace("\n", " ")
+
+print("🚀 marker_single を実行します…")
+start_time = time.time()
+subprocess.run(shlex.split(cmd), check=True)
+print("✅ marker_single 完了")
+
 # --- コンバータを準備 ---
 print("🟡 モデルとOCR設定の準備中...")
-start_time = time.time()
 converter = PdfConverter(
     artifact_dict=create_model_dict()             
 )
 
 # --- 実行 ---
 print("🟡 変換中...")
-result = converter(    
-    pdf_path,
-    output_format="markdown",
-    force_ocr=True,
-    format_lines=True,
-    use_llm=True,
-    languages="ja,en",
-    strip_existing_ocr=True,
-    redo_inline_math=True,
-    disable_image_extraction=False,
-    page_range=None,
-    gemini_api_key=gemini_api_key )
+result = converter(pdf_path )
 
 # --- 出力保存（Markdownの例） ---
 print("🟡 出力保存中...")
