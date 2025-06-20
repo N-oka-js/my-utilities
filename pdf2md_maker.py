@@ -19,14 +19,6 @@ pdf_path = input(
 ).strip().strip('"')
 output_dir = r"C:\dev\obsidian\Zettelkasten\LiteratureNote"
 output_format = "markdown"      # 他に json, html など
-languages = "ja,en"             # 日本語 + 英語対応
-force_ocr = True                # スキャンPDF対応（全ページを画像としてOCR）
-format_lines = True             # 改行・インライン数式の補正
-use_llm = True                  # LLMを使って表・数式・レイアウトを補正
-strip_existing_ocr = True       # 既存の誤OCRを捨てて再処理する  
-redo_inline_math = True         # 数式再解釈（Markdown整形）     
-disable_image_extraction = False # 図のaltテキスト化をする場合はTrue  
-page_range = None               # "0,2-5" のように一部ページだけ処理したいとき  
 
 # --- Obsidianのフロントマターの作成 ---
 pdf_name = os.path.basename(pdf_path)                       # ファイル名（例: Webを支える技術.pdf）
