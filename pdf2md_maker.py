@@ -60,23 +60,21 @@ print("🚀 marker_single を実行します…")
 start_time = time.time()
 subprocess.run(shlex.split(cmd), check=True)
 print("✅ marker_single 完了")
-
-# --- コンバータを準備 ---
-print("🟡 モデルとOCR設定の準備中...")
-converter = PdfConverter(
-    artifact_dict=create_model_dict()             
-)
-
-# --- 実行 ---
-print("🟡 変換中...")
-result = converter(pdf_path )
-
-# --- 出力保存（Markdownの例） ---
-print("🟡 出力保存中...")
-output_file = os.path.join(output_dir, "converted.md")
-with open(output_file, "w", encoding="utf-8") as f:
-    f.write(front_matter + result)
-
-print(f"✅ Done: {output_file}")
 end_time = time.time()
 print(f"🟢 処理時間: {end_time - start_time:.2f}秒")
+
+
+# --- フロントマターを追加 ---
+converted_md = os.path.join(
+    output_dir,                       # 例: C:\dev\obsidian\...
+    f"{title}.md"                     # marker_single が付けたファイル名
+)
+print("🟡 フロントマターを追加...")
+with open(converted_md, "r", encoding="utf-8") as rf:
+    body = rf.read()
+
+# すでに front_matter 変数は作ってある
+with open(converted_md, "w", encoding="utf-8") as wf:
+    wf.write(front_matter + body)
+print(f"✅ Done: {title}")
+
