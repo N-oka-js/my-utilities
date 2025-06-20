@@ -58,7 +58,8 @@ print(f"🟢 処理時間: {end_time - start_time:.2f}秒")
 
 # --- フロントマターを追加 ---
 converted_md = os.path.join(
-    output_dir,                       # 例: C:\dev\obsidian\...
+    output_dir,
+    title,                       
     f"{title}.md"                     # marker_single が付けたファイル名
 )
 print("🟡 フロントマターを追加...")
